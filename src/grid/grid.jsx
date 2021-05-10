@@ -4,6 +4,9 @@ import React, { useEffect, useState } from 'react';
 function Grid(){
   const coins=['rook','knight','bishop','queen','king','bishop','knight','rook']
   const coinPositions = [ ];
+  const samplecell={coin:'',
+  coinColor:'',
+  isActive:false}
 for(var i = 0; i < 8; i++) {
   coinPositions[i] = [ ];
     for(var j = 0; j < 8; j++) {
@@ -46,22 +49,43 @@ for(var i = 0; i < 8; i++) {
 }
   const [ selected, setSelected ] = useState(false);
   const [cellDetails, setCellDetails] = useState(coinPositions);
-  useEffect(() => {
-    cellDetails.forEach((cell) => {
-      cell.forEach((data) => {
-          if(data.isActive==true){
-            setSelected(true)
-          }
-      });
-  });
-  });
+  const [coinSelected, setcoinSelected] = useState(samplecell);
+  const [cellSelected, setcellSelected] = useState([]);
+  const [chance,setChance]=useState('white')
+  // useEffect(() => {
+  //   let count=0
+  //   cellDetails.forEach((cell) => {
+  //     cell.forEach((data) => {
+  //         if(data.isActive==true){
+  //           setSelected(true)
+  //           count++;
+  //         }
+  //     });
+  // });
+  // if(count==0){
+  //   setSelected(false)
+  // }
+  // if(!selected){
+  // setChance(chance=='white'?'black':'white')
+  // alert(chance)
+  // }
+  // },[cellDetails]);
   
 function CreateRow(firstCellColor,rowNum){
   let color=firstCellColor;
   let row = [];
   function selectGrid(r,c) {
-    if(cellDetails[r][c].coin!==''){
     const tempcellDetails=[...cellDetails]
+    if(!cellDetails[r][c].isActive){
+      
+      //setcoinSelected([])
+      setcoinSelected(cellDetails[r][c])
+      setcellSelected(a=>[r]);
+     // alert(cellSelected[0])
+     setcellSelected(a=>[...a,c]);
+      //alert(cellSelected[0]+cellSelected[1])
+    if(cellDetails[r][c].coin!=='' && cellDetails[r][c].coinColor==chance){
+   
    tempcellDetails.forEach((cell) => {
       cell.forEach((data) => {
           data.isActive=false
@@ -427,15 +451,31 @@ function CreateRow(firstCellColor,rowNum){
         break;
       default:
     }
-    setCellDetails(tempcellDetails)
+    
     }
+  }
+  else{
+      //alert(tempcellDetails[r][c].coinColor+tempcellDetails[Number(cellSelected[0])][Number(cellSelected[1])].coinColor)
+      if(tempcellDetails[r][c].coinColor!=tempcellDetails[Number(cellSelected[0])][Number(cellSelected[1])].coinColor){
+      tempcellDetails[Number(cellSelected[0])][Number(cellSelected[1])]=samplecell
+      tempcellDetails[r][c]=coinSelected
+      setChance(chance=='white'?'black':'white')
+      setcoinSelected(samplecell)
+      tempcellDetails.forEach((cell) => {
+        cell.forEach((data) => {
+            data.isActive=false
+    });
+    })
+  }
+  }
+  setCellDetails(tempcellDetails)
     //alert(JSON.stringify(cellDetails[r][c])+" "+r+","+c)
     
   }
   for(let j=0;j<8;j++)
     {   
         let classN = "cell " + ( color=="black"?"white":"black" ); 
-        row.push(<div className={classN} onClick={() => selectGrid(rowNum,j)}><p>{selected?'y':'n'}{cellDetails[rowNum][j].isActive?'T ':'F '}{cellDetails[rowNum][j].coinColor}{cellDetails[rowNum][j].coin}</p></div>)
+        row.push(<div className={classN} onClick={() => selectGrid(rowNum,j)}><p>{cellDetails[rowNum][j].isActive?'T ':'F '}{cellDetails[rowNum][j].coinColor}{cellDetails[rowNum][j].coin}</p></div>)
         color = color==="black"?"white":"black";
 }
   return row;   
