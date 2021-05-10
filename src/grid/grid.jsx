@@ -47,7 +47,7 @@ for(var i = 0; i < 8; i++) {
     }
     }
 }
-  const [ selected, setSelected ] = useState(false);
+  // const [ selected, setSelected ] = useState(false);
   const [cellDetails, setCellDetails] = useState(coinPositions);
   const [coinSelected, setcoinSelected] = useState(samplecell);
   const [cellSelected, setcellSelected] = useState([]);
@@ -432,6 +432,8 @@ function CreateRow(firstCellColor,rowNum){
         break;
       case 'pawn':{
         if(tempcellDetails[r][c].coinColor=='white'){
+          if(r==6 && tempcellDetails[r-1][c].coinColor=='')
+          tempcellDetails[r-2][c].isActive=true
           if(r-1>=0 && tempcellDetails[r-1][c].coinColor=='')
           tempcellDetails[r-1][c].isActive=true
           if(r-1>=0 && c+1<8 && tempcellDetails[r-1][c+1].coinColor=='black')
@@ -440,6 +442,8 @@ function CreateRow(firstCellColor,rowNum){
           tempcellDetails[r-1][c-1].isActive=true
         }
         else{
+          if(r==1 && tempcellDetails[r+1][c].coinColor=='')
+          tempcellDetails[r+2][c].isActive=true
           if(r+1<8 && tempcellDetails[r+1][c].coinColor=='')
           tempcellDetails[r+1][c].isActive=true
           if(r+1<8 && c+1<8 && tempcellDetails[r+1][c+1].coinColor=='white')
