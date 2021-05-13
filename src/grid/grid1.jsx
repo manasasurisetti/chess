@@ -27,14 +27,13 @@ const samplecell = {
     isActive: false
 }
 
-const defaultClassArray = Array.from({ length: 64 }, () => '');
 function Grid1({ coinPositions }) {
 
     const [coinSelected, setcoinSelected] = useState(samplecell);
     const [cellSelected, setcellSelected] = useState([]);
     const [chance, setChance] = useState('white')
     let item = []
-    const [classArray, setClassArray] = useState(defaultClassArray);
+    const [classArray, setClassArray] = useState(Array.from({ length: 64 }, () => ''));
 
 
     //populating initial layout with the cell values
@@ -93,15 +92,12 @@ function Grid1({ coinPositions }) {
                         else
                             temp[i * 8 + j] = "coinToPlay"
                     }
+
                 })
             })
             setClassArray(temp);
-        }
-        else if(classArray[ r * 8 + c ] === "coinToPlay"){
-          console.log('came here '+ r + c)
-                setClassArray(Array.from({ length: 64 }, () => ''))
-                // setChance(chance);
-                
+
+
         }
         else if (coinSelected.coinColor === chance) {
 
