@@ -28,7 +28,7 @@ const samplecell = {
 }
 
 const defaultClassArray = Array.from({ length: 64 }, () => '');
-function Grid1({ coinPositions }) {
+function Grid({ coinPositions }) {
 
     const [coinSelected, setcoinSelected] = useState(samplecell);
     const [cellSelected, setcellSelected] = useState([]);
@@ -48,7 +48,18 @@ function Grid1({ coinPositions }) {
         item.push(...row);
     }
 
-
+   const setCellDetailsHandler = (cellDetails) => {
+       setCellDetails(cellDetails);
+       console.log('cell details handler finished');
+     }
+   const setCoinSelectedHandler = (coin) => setcoinSelected(coin);
+   const setCellSelectedHandler = (cell) => setcellSelected(cell);
+   const setChanceHandler = (chance) => setChance(chance);
+   const setClassArrayHandler = (classArray1) => { 
+       setClassArray(classArray1)
+       console.log('set class handler called ')
+       console.log(classArray1)   
+   };
 
     // const [ selected, setSelected ] = useState(false);
 
@@ -78,28 +89,34 @@ function Grid1({ coinPositions }) {
         else if (!cellDetails[r][c].isActive && cellDetails[r][c].coinColor === '') //If the cell is empty and not active we'll simply return
             return;
         else if (!cellDetails[r][c].isActive && cellDetails[r][c].coinColor !== '') {
-            setcoinSelected(cellDetails[r][c])
-            setcellSelected([r]);
-            setcellSelected(a => [...a, c]);
-            setCellDetails(findPossibleMoves([...cellDetails], r, c, chance))
+            setCoinSelectedHandler(cellDetails[r][c])
+            setCellSelectedHandler([r]);
+            setCellSelectedHandler(a => [...a, c]);
+            let tempArray =[...findPossibleMoves([...cellDetails], r, c, chance)]
+            setCellDetailsHandler(tempArray);
 
-
-            let temp = classArray;
-            cellDetails.forEach((elem, i) => {
-                elem.forEach((e, j) => {
-                    if (e.isActive) {
-                        if (e.coinColor === "")
-                            temp[i * 8 + j] = "elementSelected "
-                        else
-                            temp[i * 8 + j] = "coinToPlay"
-                    }
-                })
-            })
-            setClassArray(temp);
+            let temp = classArray.slice();
+            // cellDetails.forEach((elem, i) => {
+            //     elem.forEach((e, j) => {
+                    
+            //     })
+            // })
+            console.log(cellDetails);
+            for(let i=0;i<8;i++)
+              for(let j=0;j<8;j++){
+                if (cellDetails[i][j].isActive) {
+                    if (cellDetails[i][j].coinColor === "")
+                        temp[i * 8 + j] = "elementSelected "
+                    else
+                        temp[i * 8 + j] = "coinToPlay"
+                }
+              }
+            console.log(temp);
+            setClassArrayHandler(temp);
         }
         else if(classArray[ r * 8 + c ] === "coinToPlay"){
           console.log('came here '+ r + c)
-                setClassArray(Array.from({ length: 64 }, () => ''))
+                setClassArrayHandler(Array.from({ length: 64 }, () => ''))
                 // setChance(chance);
                 
         }
@@ -112,10 +129,10 @@ function Grid1({ coinPositions }) {
                     temp[index] = '';
             })
 
-            setClassArray(temp)
-            setCellDetails(makeAMove([...cellDetails], r, c, cellSelected, coinSelected))            
-            setChance(chance === 'white' ? 'black' : 'white')
-            setcoinSelected(samplecell)
+            setClassArrayHandler(temp)
+            setCellDetailsHandler(makeAMove([...cellDetails], r, c, cellSelected, coinSelected))            
+            setChanceHandler(chance === 'white' ? 'black' : 'white')
+            setCoinSelectedHandler(samplecell)
 
         }
        
@@ -123,7 +140,7 @@ function Grid1({ coinPositions }) {
     }
 
     function CreateRow(firstCellColor, rowNum, cellDetails) {
-
+        console.log('create row called');
         let color = firstCellColor;
         let row = [];
         for (let j = 0; j < 8; j++) {
@@ -147,4 +164,4 @@ function Grid1({ coinPositions }) {
 }
 
 
-export default Grid1;
+export default Grid;

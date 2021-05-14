@@ -1,6 +1,7 @@
 import './App.css';
 import './grid/grid'
 import Grid from './grid/grid';
+import Grid1 from './grid/grid1';
 
 
 function App() {
@@ -48,8 +49,8 @@ function App() {
   }
   return (
     <div className="container">
-      {/* <Grid></Grid> */}
-      <Grid coinPositions={coinPositions}></Grid>
+       {/* <Grid1></Grid1>  */}
+       <Grid coinPositions={coinPositions}></Grid> 
     </div>
   );
 }
