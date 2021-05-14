@@ -7,23 +7,26 @@ const samplecell = {
 
 
 export function findPossibleMoves(cellDetails,r,c, chance){
-    const tempcellDetails = [...cellDetails]
-   
-
-      //setcoinSelected([])
-      
-      //alert(cellSelected[0]+cellSelected[1])
+  var tempcellDetails =[];
+  for(let i=0;i<8;i++)
+  {     tempcellDetails[i] = [];
+       for(let j=0;j<8;j++)
+           tempcellDetails[i][j] = Object.assign({}, cellDetails[i][j]);
+  }
+  
+           //   = cellDetails.map((elem)=>elem.slice(0));
       if (cellDetails[r][c].coin !== '' && cellDetails[r][c].coinColor === chance) {
 
-        tempcellDetails.forEach((cell) => {
-          cell.forEach((data) => {
-            data.isActive = false
-          });
-        })
+        // tempcellDetails.forEach((cell) => {
+        //   cell.forEach((data) => {
+        //     data.isActive = false
+        //   });
+        // })
         tempcellDetails[r][c].isActive = true;
         //coin condition
+        var i=0;
         switch (tempcellDetails[r][c].coin) {
-          case 'rook': 
+          case 'rook': {
             for (let i = 1; i < 8; i++) {
               if (c + i < 8) {
                 if (tempcellDetails[r][c + i].coin === '') 
@@ -94,6 +97,7 @@ export function findPossibleMoves(cellDetails,r,c, chance){
             }
           
             break;
+          }
           case 'knight': 
             if (r + 2 < 8 && c + 1 < 8 && tempcellDetails[r + 2][c + 1].coinColor !==tempcellDetails[r][c].coinColor) 
               tempcellDetails[r + 2][c + 1].isActive = true;
@@ -121,7 +125,7 @@ export function findPossibleMoves(cellDetails,r,c, chance){
             
           
             break;
-          case 'bishop': 
+          case 'bishop': {
             for (let i = 1; i < 8; i++) {
               if (c + i < 8 && r + i < 8) {
                 if (tempcellDetails[r + i][c + i].coin=== '') {
@@ -139,13 +143,15 @@ export function findPossibleMoves(cellDetails,r,c, chance){
                 break;
               }
             }
-            for (let i = 1; i < 8; i++) {
-              if (c - i >= 0 && r + i < 8) {
-                if (tempcellDetails[r + i][c - i].coin=== '') {
-                  tempcellDetails[r + i][c - i].isActive = true;
+            for (let m = 1; m < 8; m++) {
+              if (c - m >= 0 && r + m < 8) {
+                if (tempcellDetails[r + m][c - m].coin=== '') {
+                  console.log('r+i' ,r+m)
+                  console.log('c-i', c-m)
+                  tempcellDetails[r + m][c - m].isActive = true;
                 }
-                else if (tempcellDetails[r + i][c - i].coin !=='' && tempcellDetails[r + i][c - i].coinColor !==tempcellDetails[r][c].coinColor) {
-                  tempcellDetails[r + i][c - i].isActive = true;
+                else if (tempcellDetails[r + m][c - m].coin !=='' && tempcellDetails[r + m][c - m].coinColor !==tempcellDetails[r][c].coinColor) {
+                  tempcellDetails[r + m][c - m].isActive = true;
                   break;
                 }
                 else {
@@ -192,6 +198,7 @@ export function findPossibleMoves(cellDetails,r,c, chance){
             }
           
             break;
+          }
           case 'queen': 
             for (let i = 1; i < 8; i++) {
               if (c + i < 8) {
@@ -386,10 +393,16 @@ export function findPossibleMoves(cellDetails,r,c, chance){
         }
 
       }
-         return tempcellDetails;
+    return tempcellDetails;
+         
          
 }
 
+ function findMoves(tempcellDetails, r, c){
+  
+
+  return tempcellDetails;
+}
   export const makeAMove = (tempcellDetails, r, c, cellSelected, coinSelected) => {
     if (tempcellDetails[r][c].coinColor !==tempcellDetails[Number(cellSelected[0])][Number(cellSelected[1])].coinColor) {
         tempcellDetails[Number(cellSelected[0])][Number(cellSelected[1])] = samplecell
