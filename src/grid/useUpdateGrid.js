@@ -11,11 +11,11 @@ export function findPossibleMoves(tempcellDetails,r,c, chance){
   
            //   = cellDetails.map((elem)=>elem.slice(0));
 
-        // tempcellDetails.forEach((cell) => {
-        //   cell.forEach((data) => {
-        //     data.isActive = false
-        //   });
-        // })
+        tempcellDetails.forEach((cell) => {
+          cell.forEach((data) => {
+            data.isActive = false
+          });
+        })
         tempcellDetails[r][c].isActive = true;
         //coin condition
         var i=0;

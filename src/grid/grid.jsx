@@ -35,7 +35,8 @@ function Grid({ coinPositions }){
     const [cellSelected, setcellSelected] = useState([]);
     let item = []
     const [chance, setChance] = useState('white')
-
+    
+    const [classArray, setClassArray] = useState(defaultClassArray);
 
     //populating initial layout with the cell values
 
@@ -55,13 +56,20 @@ let initialColor = "black"
     const setCoinSelectedHandler = (coin) => setcoinSelected(coin);
     const setCellSelectedHandler = (cell) => setcellSelected(cell);
     const setChanceHandler = (chance) => setChance(chance);
+    const setClassArrayHandler = (classArray1) => { 
+        setClassArray(classArray1)
+        console.log('set class handler called ')
+        console.log(classArray1)   
+    };
   
   function cellSelector(e,r,c) {
     var tempcellDetails =[];
+    var temp=[]
     for(let i=0;i<8;i++)
     {     tempcellDetails[i] = [];
          for(let j=0;j<8;j++){
              tempcellDetails[i][j] = Object.assign({}, cellDetails[i][j]);
+             temp[i*8+j]=''
              }
     }
     // const tempcellDetails=[...cellDetails]
@@ -86,6 +94,18 @@ let initialColor = "black"
     }
       //alert(tempcellDetails[r][c].coinColor+tempcellDetails[Number(cellSelected[0])][Number(cellSelected[1])].coinColor)
 }
+for(let i=0;i<8;i++){
+for(let j=0;j<8;j++){
+  if (tempcellDetails[i][j].isActive) {
+      if (tempcellDetails[i][j].coinColor === "")
+          temp[i * 8 + j] = "elementSelected "
+      else
+          temp[i * 8 + j] = "coinToPlay"
+  }
+}
+}
+console.log(temp);
+setClassArrayHandler(temp);
   }
 
 function CreateRow(firstCellColor, rowNum, cellDetails){
@@ -93,7 +113,7 @@ function CreateRow(firstCellColor, rowNum, cellDetails){
   let row = [];
   for (let j = 0; j < 8; j++) {
             let classN = "cell " + (color === "black" ? "white" : "black");
-            row.push(<div key={_.uniqueId()} className={classN} onClick={(e) => cellSelector(e, rowNum, j)}> <div className={cellDetails[rowNum][j].isActive?cellDetails[rowNum][j].coinColor === ""?"elementSelected":"coinToPlay":""} ></div><p>
+            row.push(<div key={_.uniqueId()} className={classN} onClick={(e) => cellSelector(e, rowNum, j)}> <div className={classArray[rowNum * 8 + j]} ></div><p>
                 {
                     pieces[cellDetails[rowNum][j].coinColor] ?
                         pieces[cellDetails[rowNum][j].coinColor][cellDetails[rowNum][j].coin] : ''
