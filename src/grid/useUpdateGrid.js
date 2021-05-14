@@ -6,10 +6,16 @@ const samplecell = {
   }
 
 
-export function findPossibleMoves(tempcellDetails,r,c, chance){
-  
+export function findPossibleMoves(cellDetails,r,c, chance){
+  var tempcellDetails =[];
+  for(let i=0;i<8;i++)
+  {     tempcellDetails[i] = [];
+       for(let j=0;j<8;j++)
+           tempcellDetails[i][j] = Object.assign({}, cellDetails[i][j]);
+  }
   
            //   = cellDetails.map((elem)=>elem.slice(0));
+      if (cellDetails[r][c].coin !== '' && cellDetails[r][c].coinColor === chance) {
 
         // tempcellDetails.forEach((cell) => {
         //   cell.forEach((data) => {
@@ -386,12 +392,19 @@ export function findPossibleMoves(tempcellDetails,r,c, chance){
           default:
         }
 
+      }
     return tempcellDetails;
          
          
 }
 
+ function findMoves(tempcellDetails, r, c){
+  
+
+  return tempcellDetails;
+}
   export const makeAMove = (tempcellDetails, r, c, cellSelected, coinSelected) => {
+    if (tempcellDetails[r][c].coinColor !==tempcellDetails[Number(cellSelected[0])][Number(cellSelected[1])].coinColor) {
         tempcellDetails[Number(cellSelected[0])][Number(cellSelected[1])] = samplecell
         tempcellDetails[r][c] = coinSelected
         
@@ -401,5 +414,6 @@ export function findPossibleMoves(tempcellDetails,r,c, chance){
             data.isActive = false
           });
         })
+      }
       return tempcellDetails;
   }
