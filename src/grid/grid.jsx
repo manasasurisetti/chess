@@ -28,124 +28,72 @@ const samplecell = {
 }
 
 const defaultClassArray = Array.from({ length: 64 }, () => '');
-function Grid({ coinPositions }) {
+
+function Grid({ coinPositions }){
 
     const [coinSelected, setcoinSelected] = useState(samplecell);
     const [cellSelected, setcellSelected] = useState([]);
-    const [chance, setChance] = useState('white')
     let item = []
-    const [classArray, setClassArray] = useState(defaultClassArray);
+    const [chance, setChance] = useState('white')
 
 
     //populating initial layout with the cell values
 
     const [cellDetails, setCellDetails] = useState(coinPositions);
-    //cellDetails = coinPositions;
-    let initialColor = "black"
+
+let initialColor = "black"
     for (let i = 0; i < 8; i++) {
         let row = CreateRow(initialColor, i, cellDetails)
         initialColor = initialColor === "black" ? "white" : "black";
         item.push(...row);
     }
 
-   const setCellDetailsHandler = (cellDetails) => {
-       setCellDetails(cellDetails);
-       console.log('cell details handler finished');
-     }
-   const setCoinSelectedHandler = (coin) => setcoinSelected(coin);
-   const setCellSelectedHandler = (cell) => setcellSelected(cell);
-   const setChanceHandler = (chance) => setChance(chance);
-   const setClassArrayHandler = (classArray1) => { 
-       setClassArray(classArray1)
-       console.log('set class handler called ')
-       console.log(classArray1)   
-   };
-
-    // const [ selected, setSelected ] = useState(false);
-
-    // useEffect(() => {
-    //   let count=0
-    //   cellDetails.forEach((cell) => {
-    //     cell.forEach((data) => {
-    //         if(data.isActive==true){
-    //           setSelected(true)
-    //           count++;
-    //         }
-    //     });
-    // });
-    // if(count==0){
-    //   setSelected(false)
-    // }
-    // if(!selected){
-    // setChance(chance=='white'?'black':'white')
-    // alert(chance)
-    // }
-    // },[cellDetails]);
-
-    function cellSelector(e, r, c) {
-
-        if (!cellDetails[r][c].isActive && cellDetails[r][c].coinColor !== chance) //When it's not your turn, simply return
-            return;
-        else if (!cellDetails[r][c].isActive && cellDetails[r][c].coinColor === '') //If the cell is empty and not active we'll simply return
-            return;
-        else if (!cellDetails[r][c].isActive && cellDetails[r][c].coinColor !== '') {
-            setCoinSelectedHandler(cellDetails[r][c])
-            setCellSelectedHandler([r]);
-            setCellSelectedHandler(a => [...a, c]);
-            let tempArray =[...findPossibleMoves([...cellDetails], r, c, chance)]
-            setCellDetailsHandler(tempArray);
-
-            let temp = classArray.slice();
-            // cellDetails.forEach((elem, i) => {
-            //     elem.forEach((e, j) => {
-                    
-            //     })
-            // })
-            console.log(cellDetails);
-            for(let i=0;i<8;i++)
-              for(let j=0;j<8;j++){
-                if (cellDetails[i][j].isActive) {
-                    if (cellDetails[i][j].coinColor === "")
-                        temp[i * 8 + j] = "elementSelected "
-                    else
-                        temp[i * 8 + j] = "coinToPlay"
-                }
-              }
-            console.log(temp);
-            setClassArrayHandler(temp);
-        }
-        else if(classArray[ r * 8 + c ] === "coinToPlay"){
-          console.log('came here '+ r + c)
-                setClassArrayHandler(Array.from({ length: 64 }, () => ''))
-                // setChance(chance);
-                
-        }
-        else if (coinSelected.coinColor === chance) {
-
-            let temp = classArray;
-
-            temp.forEach((elem, index) => {
-                if (elem.includes("coinToPlay") || elem.includes("elementSelected"))
-                    temp[index] = '';
-            })
-
-            setClassArrayHandler(temp)
-            setCellDetailsHandler(makeAMove([...cellDetails], r, c, cellSelected, coinSelected))            
-            setChanceHandler(chance === 'white' ? 'black' : 'white')
-            setCoinSelectedHandler(samplecell)
-
-        }
-       
-
+    const setCellDetailsHandler = (cellDetails) => {
+        setCellDetails(cellDetails);
+        console.log('cell details handler finished');
+      }
+    const setCoinSelectedHandler = (coin) => setcoinSelected(coin);
+    const setCellSelectedHandler = (cell) => setcellSelected(cell);
+    const setChanceHandler = (chance) => setChance(chance);
+  
+  function cellSelector(e,r,c) {
+    var tempcellDetails =[];
+    for(let i=0;i<8;i++)
+    {     tempcellDetails[i] = [];
+         for(let j=0;j<8;j++){
+             tempcellDetails[i][j] = Object.assign({}, cellDetails[i][j]);
+             }
     }
+    // const tempcellDetails=[...cellDetails]
+    if(!cellDetails[r][c].isActive){
+      
+      //setcoinSelected([])
+      setCoinSelectedHandler(cellDetails[r][c])
+      setCellSelectedHandler(a=>[r]);
+     // alert(cellSelected[0])
+     setCellSelectedHandler(a=>[...a,c]);
+      //alert(cellSelected[0]+cellSelected[1])
+      if(cellDetails[r][c].coin!=='' && cellDetails[r][c].coinColor==chance){
+        setCellDetailsHandler(findPossibleMoves([...tempcellDetails],r,c))
+      }
+  }
+  else{
+      
+    if(tempcellDetails[r][c].coinColor!=tempcellDetails[Number(cellSelected[0])][Number(cellSelected[1])].coinColor){
+        setChanceHandler(chance=='white'?'black':'white')
+        setCoinSelectedHandler(samplecell)
+        setCellDetailsHandler(makeAMove([...tempcellDetails],r,c,cellSelected,coinSelected))
+    }
+      //alert(tempcellDetails[r][c].coinColor+tempcellDetails[Number(cellSelected[0])][Number(cellSelected[1])].coinColor)
+}
+  }
 
-    function CreateRow(firstCellColor, rowNum, cellDetails) {
-        console.log('create row called');
-        let color = firstCellColor;
-        let row = [];
-        for (let j = 0; j < 8; j++) {
+function CreateRow(firstCellColor, rowNum, cellDetails){
+  let color=firstCellColor;
+  let row = [];
+  for (let j = 0; j < 8; j++) {
             let classN = "cell " + (color === "black" ? "white" : "black");
-            row.push(<div key={_.uniqueId()} className={classN} onClick={(e) => cellSelector(e, rowNum, j)}> <div className={classArray[rowNum * 8 + j]} ></div><p>
+            row.push(<div key={_.uniqueId()} className={classN} onClick={(e) => cellSelector(e, rowNum, j)}> <div className={cellDetails[rowNum][j].isActive?cellDetails[rowNum][j].coinColor === ""?"elementSelected":"coinToPlay":""} ></div><p>
                 {
                     pieces[cellDetails[rowNum][j].coinColor] ?
                         pieces[cellDetails[rowNum][j].coinColor][cellDetails[rowNum][j].coin] : ''
@@ -155,13 +103,14 @@ function Grid({ coinPositions }) {
             </p></div>)
             color = color === "black" ? "white" : "black";
         }
-        return row;
-    }
-
-    return (
-        item
-    )
+        return row; 
 }
 
+      
+    return(
+      item
+
+    )
+}
 
 export default Grid;
