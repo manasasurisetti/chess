@@ -61,29 +61,13 @@ function Grid({ coinPositions }) {
        console.log(classArray1)   
    };
 
-    // const [ selected, setSelected ] = useState(false);
-
-    // useEffect(() => {
-    //   let count=0
-    //   cellDetails.forEach((cell) => {
-    //     cell.forEach((data) => {
-    //         if(data.isActive==true){
-    //           setSelected(true)
-    //           count++;
-    //         }
-    //     });
-    // });
-    // if(count==0){
-    //   setSelected(false)
-    // }
-    // if(!selected){
-    // setChance(chance=='white'?'black':'white')
-    // alert(chance)
-    // }
-    // },[cellDetails]);
-
     function cellSelector(e, r, c) {
-
+      let tempcellDetails = [];
+      for(let i=0;i<8;i++)
+      {     tempcellDetails[i] = [];
+           for(let j=0;j<8;j++)
+               tempcellDetails[i][j] = Object.assign({}, cellDetails[i][j]);
+      }
         if (!cellDetails[r][c].isActive && cellDetails[r][c].coinColor !== chance) //When it's not your turn, simply return
             return;
         else if (!cellDetails[r][c].isActive && cellDetails[r][c].coinColor === '') //If the cell is empty and not active we'll simply return
@@ -92,8 +76,8 @@ function Grid({ coinPositions }) {
             setCoinSelectedHandler(cellDetails[r][c])
             setCellSelectedHandler([r]);
             setCellSelectedHandler(a => [...a, c]);
-            let tempArray =[...findPossibleMoves([...cellDetails], r, c, chance)]
-            setCellDetailsHandler(tempArray);
+             tempcellDetails = [...findPossibleMoves([...cellDetails], r, c, chance)]
+            setCellDetailsHandler(tempcellDetails);
 
             let temp = classArray.slice();
             // cellDetails.forEach((elem, i) => {
