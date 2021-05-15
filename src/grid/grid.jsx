@@ -29,13 +29,14 @@ const samplecell = {
 
 const defaultClassArray = Array.from({ length: 64 }, () => '');
 function Grid({ coinPositions }) {
-
+      console.log('i was called again')
     const [coinSelected, setcoinSelected] = useState(samplecell);
     const [cellSelected, setcellSelected] = useState([]);
     const [chance, setChance] = useState('white')
-    let item = []
     const [classArray, setClassArray] = useState(defaultClassArray);
 
+    let item = []
+    
 
     //populating initial layout with the cell values
 
@@ -49,6 +50,7 @@ function Grid({ coinPositions }) {
     }
 
    const setCellDetailsHandler = (cellDetails) => {
+    
        setCellDetails(cellDetails);
        console.log('cell details handler finished');
      }
@@ -80,16 +82,18 @@ function Grid({ coinPositions }) {
             setCellDetailsHandler(tempcellDetails);
 
             let temp = classArray.slice();
-            // cellDetails.forEach((elem, i) => {
-            //     elem.forEach((e, j) => {
+    
+  
+            tempcellDetails.forEach((elem, i) => {
+                elem.forEach((e, j) => {
                     
-            //     })
-            // })
+                })
+            })
             console.log(cellDetails);
             for(let i=0;i<8;i++)
               for(let j=0;j<8;j++){
-                if (cellDetails[i][j].isActive) {
-                    if (cellDetails[i][j].coinColor === "")
+                if (tempcellDetails[i][j].isActive) {
+                    if (tempcellDetails[i][j].coinColor === "")
                         temp[i * 8 + j] = "elementSelected "
                     else
                         temp[i * 8 + j] = "coinToPlay"

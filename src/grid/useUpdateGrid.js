@@ -17,11 +17,11 @@ export function findPossibleMoves(cellDetails,r,c, chance){
            //   = cellDetails.map((elem)=>elem.slice(0));
       if (cellDetails[r][c].coin !== '' && cellDetails[r][c].coinColor === chance) {
 
-        // tempcellDetails.forEach((cell) => {
-        //   cell.forEach((data) => {
-        //     data.isActive = false
-        //   });
-        // })
+        tempcellDetails.forEach((cell) => {
+          cell.forEach((data) => {
+            data.isActive = false
+          });
+        })
         tempcellDetails[r][c].isActive = true;
         //coin condition
         var i=0;
