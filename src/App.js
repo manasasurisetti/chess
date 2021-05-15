@@ -1,7 +1,7 @@
 import './App.css';
 import './grid/grid'
 import Grid from './grid/grid';
-import Grid1 from './grid/grid1';
+
 
 
 function App() {

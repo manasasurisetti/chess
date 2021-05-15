@@ -392,14 +392,65 @@ export function findPossibleMoves(tempcellDetails,r,c, chance){
 }
 
   export const makeAMove = (tempcellDetails, r, c, cellSelected, coinSelected) => {
-        tempcellDetails[Number(cellSelected[0])][Number(cellSelected[1])] = samplecell
-        tempcellDetails[r][c] = coinSelected
+    
+        let temporary = [];
+        for(let i=0;i<8;i++)
+       {
+          temporary[i] = [];
+           for(let j=0;j<8;j++){
+             temporary[i][j] = Object.assign({}, tempcellDetails[i][j]);
+            }
+       }
+        temporary[Number(cellSelected[0])][Number(cellSelected[1])] = samplecell
+        temporary[r][c] = coinSelected;
+        const checkFlag = checkForKingChecked(temporary, coinSelected.coinColor)
+        if(checkFlag === true)
+          {
+            alert('how dare you macha! your king is under threat');
+          }
+        else{
+             tempcellDetails[Number(cellSelected[0])][Number(cellSelected[1])] = samplecell
+             tempcellDetails[r][c] = coinSelected
+        }
         
-        
+
         tempcellDetails.forEach((cell) => {
           cell.forEach((data) => {
             data.isActive = false
           });
         })
-      return tempcellDetails;
+      return [tempcellDetails, !checkFlag];
+  }
+
+
+
+  const checkForKingChecked = (boardLayout, color) => {
+     let flag = false;
+     let colorToCheck = color === 'white' ? 'black' : 'white';
+     var [x,y] = findKingPosition(boardLayout, color)
+     for(let i=0;i<8;i++){
+       for(let j=0;j<8;j++){
+         if(boardLayout[i][j].coinColor === colorToCheck)
+          {
+             let tempArray = findPossibleMoves([...boardLayout], i, j);
+             if(tempArray[x][y].isActive === true)
+               {
+                 flag = true;
+                 break;
+               } 
+          }
+       }
+     }
+      return flag;
+  }
+
+  const findKingPosition = (boardLayout, color) => {
+    var x, y;
+    for(let i=0;i<8;i++)
+      for(let j=0;j<8;j++)
+         if(boardLayout[i][j].coin === "king" && boardLayout[i][j].coinColor === color)
+             [x, y] = [i, j];     
+      
+    return [x,y];
+
   }

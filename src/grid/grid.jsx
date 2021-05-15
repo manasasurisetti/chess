@@ -51,15 +51,12 @@ let initialColor = "black"
 
     const setCellDetailsHandler = (cellDetails) => {
         setCellDetails(cellDetails);
-        console.log('cell details handler finished');
       }
     const setCoinSelectedHandler = (coin) => setcoinSelected(coin);
     const setCellSelectedHandler = (cell) => setcellSelected(cell);
     const setChanceHandler = (chance) => setChance(chance);
     const setClassArrayHandler = (classArray1) => { 
         setClassArray(classArray1)
-        console.log('set class handler called ')
-        console.log(classArray1)   
     };
   
   function cellSelector(e,r,c) {
@@ -72,25 +69,30 @@ let initialColor = "black"
              temp[i*8+j]=''
              }
     }
-    // const tempcellDetails=[...cellDetails]
     if(!cellDetails[r][c].isActive){
-      
-      //setcoinSelected([])
-      setCoinSelectedHandler(cellDetails[r][c])
-      setCellSelectedHandler(a=>[r]);
-     // alert(cellSelected[0])
-     setCellSelectedHandler(a=>[...a,c]);
-      //alert(cellSelected[0]+cellSelected[1])
-      if(cellDetails[r][c].coin!=='' && cellDetails[r][c].coinColor==chance){
+        if(cellDetails[r][c].coin === '')
+          return;
+     
+      if(cellDetails[r][c].coinColor==chance){
+        setCoinSelectedHandler(cellDetails[r][c])
+        setCellSelectedHandler(a=>[r]);
+        setCellSelectedHandler(a=>[...a,c]);
         setCellDetailsHandler(findPossibleMoves([...tempcellDetails],r,c))
       }
   }
   else{
       
-    if(tempcellDetails[r][c].coinColor!=tempcellDetails[Number(cellSelected[0])][Number(cellSelected[1])].coinColor){
-        setChanceHandler(chance=='white'?'black':'white')
+      if(cellDetails[r][c].coinColor === coinSelected.coinColor){
+        tempcellDetails.forEach(elem => elem.forEach(e => e.isActive = false))
+        setCellDetailsHandler(tempcellDetails.map(elem => elem.map(e => { return{ ...e, isActive:false}})))
+      }
+   else if(tempcellDetails[r][c].coinColor!=tempcellDetails[Number(cellSelected[0])][Number(cellSelected[1])].coinColor){
+        //setChanceHandler(chance=='white'?'black':'white')
         setCoinSelectedHandler(samplecell)
-        setCellDetailsHandler(makeAMove([...tempcellDetails],r,c,cellSelected,coinSelected))
+       let [resultLayout, movePlayed] = makeAMove([...tempcellDetails],r,c,cellSelected,coinSelected)
+       setCellDetailsHandler(resultLayout);
+       if(movePlayed)
+         setChanceHandler(chance=='white'?'black':'white');
     }
       //alert(tempcellDetails[r][c].coinColor+tempcellDetails[Number(cellSelected[0])][Number(cellSelected[1])].coinColor)
 }
@@ -104,9 +106,9 @@ for(let j=0;j<8;j++){
   }
 }
 }
-console.log(temp);
+
 setClassArrayHandler(temp);
-  }
+}
 
 function CreateRow(firstCellColor, rowNum, cellDetails){
   let color=firstCellColor;
