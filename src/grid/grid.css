@@ -54,6 +54,11 @@
     animation: spin 10s linear infinite;
     background-clip: border-box;
 }
+
+.timer{
+    font-size: xx-large;
+    text-align: center;
+}
 @keyframes spin { 
     100% { 
       transform: rotateZ(360deg);
