@@ -56,7 +56,7 @@ export function findPossibleMoves(tempcellDetails,r,c, chance){
               }
             }
             for (let i = 1; i < 8; i++) {
-              if (r + 1 < 8) {
+              if (r + i < 8) {
                 if (tempcellDetails[r + i][c].coin=== '') {
                   tempcellDetails[r + i][c].isActive = true;
                 }
@@ -229,7 +229,7 @@ export function findPossibleMoves(tempcellDetails,r,c, chance){
               }
             }
             for (let i = 1; i < 8; i++) {
-              if (r + 1 < 8) {
+              if (r + i < 8) {
                 if (tempcellDetails[r + i][c].coin=== '') {
                   tempcellDetails[r + i][c].isActive = true;
                 }
@@ -424,7 +424,7 @@ export function findPossibleMoves(tempcellDetails,r,c, chance){
 
 
 
-  const checkForKingChecked = (boardLayout, color) => {
+  export const checkForKingChecked = (boardLayout, color) => {
      let flag = false;
      let colorToCheck = color === 'white' ? 'black' : 'white';
      var [x,y] = findKingPosition(boardLayout, color)

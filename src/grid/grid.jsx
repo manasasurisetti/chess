@@ -1,6 +1,6 @@
 import './grid.css'
 import React, {  Fragment, useEffect, useState } from 'react';
-import { findPossibleMoves, makeAMove } from './useUpdateGrid';
+import { findPossibleMoves, makeAMove ,checkForKingChecked } from './useUpdateGrid';
 const _ = require('lodash')
 const pieces = {
     black: {
@@ -35,6 +35,7 @@ function Grid({ coinPositions, player1, player2 }){
     const [cellSelected, setcellSelected] = useState([]);
     let item = []
     const [chance, setChance] = useState('white')
+    const [checkFlag, setCheckFlag] = useState('false')
     
     const [classArray, setClassArray] = useState(defaultClassArray);
 
@@ -42,6 +43,10 @@ function Grid({ coinPositions, player1, player2 }){
 
     const [cellDetails, setCellDetails] = useState(coinPositions);
     useEffect(()=> {
+        if(checkFlag==true){
+            alert('haha macha! your king is under threat');
+            setCheckFlag(false)
+          }
       let timer = setInterval(()=>{
           setTimer((prev) => {
             if(prev.sec >= 60)
@@ -52,6 +57,11 @@ function Grid({ coinPositions, player1, player2 }){
       },1000)
       return () => clearInterval(timer)
     })
+    // useEffect(() => {
+    // if(classArray[0]=='checked'){
+    //     alert('haha macha! your king is under threat');
+    //   }
+    // },chance);
 let initialColor = "black"
     for (let i = 0; i < 8; i++) {
         let row = CreateRow(initialColor, i, cellDetails)
@@ -101,8 +111,22 @@ let initialColor = "black"
         setCoinSelectedHandler(samplecell)
        let [resultLayout, movePlayed] = makeAMove([...tempcellDetails],r,c,cellSelected,coinSelected)
        setCellDetailsHandler(resultLayout);
-       if(movePlayed)
+       let temporary = [];
+        for(let i=0;i<8;i++)
+       {
+          temporary[i] = [];
+           for(let j=0;j<8;j++){
+             temporary[i][j] = Object.assign({}, resultLayout[i][j]);
+            }
+       }
+       if(movePlayed){
+        const checkFlag = checkForKingChecked(temporary, chance==='white'?'black':'white')
+        if(checkFlag === true)
+          {
+            setCheckFlag(true)
+          }
          setChanceHandler(chance=='white'?'black':'white');
+            }
     }
       //alert(tempcellDetails[r][c].coinColor+tempcellDetails[Number(cellSelected[0])][Number(cellSelected[1])].coinColor)
 }
