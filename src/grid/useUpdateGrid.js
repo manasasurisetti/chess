@@ -140,8 +140,6 @@ export function findPossibleMoves(tempcellDetails,r,c, chance){
             for (let m = 1; m < 8; m++) {
               if (c - m >= 0 && r + m < 8) {
                 if (tempcellDetails[r + m][c - m].coin=== '') {
-                  console.log('r+i' ,r+m)
-                  console.log('c-i', c-m)
                   tempcellDetails[r + m][c - m].isActive = true;
                 }
                 else if (tempcellDetails[r + m][c - m].coin !=='' && tempcellDetails[r + m][c - m].coinColor !==tempcellDetails[r][c].coinColor) {
@@ -394,7 +392,7 @@ export function findPossibleMoves(tempcellDetails,r,c, chance){
   export const makeAMove = (tempcellDetails, r, c, cellSelected, coinSelected) => {
     
         let temporary = [];
-        const killedCoin=samplecell
+        let killedCoin=samplecell
         for(let i=0;i<8;i++)
        {
           temporary[i] = [];

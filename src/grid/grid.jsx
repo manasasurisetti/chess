@@ -197,12 +197,37 @@ function CreateRow(firstCellColor, rowNum, cellDetails){
       
     return(
       <Fragment>
+     
+      <div className="player">
+       <div className="nameHeader">{player1}</div>
+       <div className="coinsDead">
+        {
+          blackDead.map((item)=>(
+           <div className="dead">{pieces['black'][item.coin]}</div>
+          ))
+        }
+
+      </div>
+      </div>  
+      <div className="wrapper">
       <div className="timer">  
       {timerState.min}:{timerState.sec}
       </div> 
       <div className="boardContainer"> 
+      
       {item}
       </div>
+      </div>
+      <div className="player">
+       <div className="nameHeader">{player2}</div>
+       <div className="coinsDead">
+       {
+          whiteDead.map((item)=>(
+           <div className="dead">{pieces.white[item.coin]}</div>
+          ))
+        }
+      </div>
+      </div>  
       </Fragment>
 
     )
