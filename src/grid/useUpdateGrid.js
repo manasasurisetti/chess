@@ -394,6 +394,7 @@ export function findPossibleMoves(tempcellDetails,r,c, chance){
   export const makeAMove = (tempcellDetails, r, c, cellSelected, coinSelected) => {
     
         let temporary = [];
+        const killedCoin=samplecell
         for(let i=0;i<8;i++)
        {
           temporary[i] = [];
@@ -410,6 +411,7 @@ export function findPossibleMoves(tempcellDetails,r,c, chance){
           }
         else{
              tempcellDetails[Number(cellSelected[0])][Number(cellSelected[1])] = samplecell
+             killedCoin=tempcellDetails[r][c]
              tempcellDetails[r][c] = coinSelected
         }
         
@@ -419,7 +421,7 @@ export function findPossibleMoves(tempcellDetails,r,c, chance){
             data.isActive = false
           });
         })
-      return [tempcellDetails, !checkFlag];
+      return [tempcellDetails,killedCoin, !checkFlag];
   }
 
 

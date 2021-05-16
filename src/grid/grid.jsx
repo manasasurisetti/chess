@@ -37,7 +37,8 @@ function Grid({ coinPositions, player1, player2 }){
     const [chance, setChance] = useState('white')
     const [checkFlag, setCheckFlag] = useState('false')
     const [checkmateFlag, setCheckmateFlag] = useState('false')
-    
+    const [whiteDead, setWhiteDead] = useState([]);
+    const [blackDead, setBlackDead] = useState([]);
     const [classArray, setClassArray] = useState(defaultClassArray);
 
     //populating initial layout with the cell values
@@ -85,6 +86,8 @@ let initialColor = "black"
     const setClassArrayHandler = (classArray1) => { 
         setClassArray(classArray1)
     };
+    const setWhiteDeadHandler = (wDead) => setWhiteDead(wDead);
+    const setBlackDeadHandler = (bDead) => setBlackDead(bDead);
   
   function cellSelector(e,r,c) {
     var tempcellDetails =[];
@@ -116,8 +119,14 @@ let initialColor = "black"
    else if(tempcellDetails[r][c].coinColor!=tempcellDetails[Number(cellSelected[0])][Number(cellSelected[1])].coinColor){
         //setChanceHandler(chance=='white'?'black':'white')
         setCoinSelectedHandler(samplecell)
-       let [resultLayout, movePlayed] = makeAMove([...tempcellDetails],r,c,cellSelected,coinSelected)
+       let [resultLayout,killedCoin, movePlayed] = makeAMove([...tempcellDetails],r,c,cellSelected,coinSelected)
        setCellDetailsHandler(resultLayout);
+       if(killedCoin.coinColor=='white'){
+       setWhiteDeadHandler(a=>[...a,killedCoin])
+       }
+       else if(killedCoin.coinColor=='black'){
+       setBlackDeadHandler(a=>[...a,killedCoin])
+       }
        let temporary = [];
         for(let i=0;i<8;i++)
        {
