@@ -1,5 +1,5 @@
 import './grid.css'
-import React, {  useState } from 'react';
+import React, {  Fragment, useEffect, useState } from 'react';
 import { findPossibleMoves, makeAMove } from './useUpdateGrid';
 const _ = require('lodash')
 const pieces = {
@@ -29,8 +29,8 @@ const samplecell = {
 
 const defaultClassArray = Array.from({ length: 64 }, () => '');
 
-function Grid({ coinPositions }){
-
+function Grid({ coinPositions, player1, player2 }){
+    const [timerState, setTimer] = useState({sec: 0, min: 0})
     const [coinSelected, setcoinSelected] = useState(samplecell);
     const [cellSelected, setcellSelected] = useState([]);
     let item = []
@@ -41,7 +41,17 @@ function Grid({ coinPositions }){
     //populating initial layout with the cell values
 
     const [cellDetails, setCellDetails] = useState(coinPositions);
-
+    useEffect(()=> {
+      let timer = setInterval(()=>{
+          setTimer((prev) => {
+            if(prev.sec >= 60)
+              return { sec:0, min: prev.min +1}
+            else  
+              return { sec:prev.sec+1, min: prev.min}
+          })
+      },1000)
+      return () => clearInterval(timer)
+    })
 let initialColor = "black"
     for (let i = 0; i < 8; i++) {
         let row = CreateRow(initialColor, i, cellDetails)
@@ -130,7 +140,14 @@ function CreateRow(firstCellColor, rowNum, cellDetails){
 
       
     return(
-      item
+      <Fragment>
+      <div className="timer">  
+      {timerState.min}:{timerState.sec}
+      </div> 
+      <div className="boardContainer"> 
+      {item}
+      </div>
+      </Fragment>
 
     )
 }
