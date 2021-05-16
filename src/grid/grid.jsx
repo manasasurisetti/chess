@@ -201,7 +201,11 @@ function CreateRow(firstCellColor, rowNum, cellDetails){
       <div className="player">
        <div className="nameHeader">{player1}</div>
        <div className="coinsDead">
-        {}
+        {
+          blackDead.map((item)=>(
+           <div className="dead">{pieces['black'][item.coin]}</div>
+          ))
+        }
 
       </div>
       </div>  
@@ -217,6 +221,11 @@ function CreateRow(firstCellColor, rowNum, cellDetails){
       <div className="player">
        <div className="nameHeader">{player2}</div>
        <div className="coinsDead">
+       {
+          whiteDead.map((item)=>(
+           <div className="dead">{pieces.white[item.coin]}</div>
+          ))
+        }
       </div>
       </div>  
       </Fragment>

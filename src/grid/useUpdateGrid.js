@@ -394,7 +394,7 @@ export function findPossibleMoves(tempcellDetails,r,c, chance){
   export const makeAMove = (tempcellDetails, r, c, cellSelected, coinSelected) => {
     
         let temporary = [];
-        const killedCoin=samplecell
+        let killedCoin=samplecell
         for(let i=0;i<8;i++)
        {
           temporary[i] = [];
