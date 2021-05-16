@@ -427,6 +427,7 @@ export function findPossibleMoves(tempcellDetails,r,c, chance){
   export const checkForKingChecked = (boardLayout, color) => {
      let flag = false;
      let colorToCheck = color === 'white' ? 'black' : 'white';
+    //  let colorToCheck = color
      var [x,y] = findKingPosition(boardLayout, color)
      for(let i=0;i<8;i++){
        for(let j=0;j<8;j++){
@@ -453,4 +454,38 @@ export function findPossibleMoves(tempcellDetails,r,c, chance){
       
     return [x,y];
 
+  }
+
+  export const checkForKingCheckmate=(boardLayout,color) => {
+      
+    let colorToCheck = color === 'white' ? 'black' : 'white';
+    for(let i=0;i<8;i++){
+        for(let j=0;j<8;j++){
+          if(boardLayout[i][j].coinColor === colorToCheck)
+           {
+              let tempArray = findPossibleMoves([...boardLayout], i, j);
+              for(let k=0;k<8;k++){
+                for(let l=0;l<8;l++){
+                    if((k!=i || l!=j) && tempArray[k][l].isActive==true && tempArray[k][l].coin!='king'){
+                        let temporary = [];
+                          for(let m=0;m<8;m++)
+                             {
+                               temporary[m] = [];
+                               for(let n=0;n<8;n++){
+                                   temporary[m][n] = Object.assign({}, tempArray[m][n]);
+                                 }
+                              }
+                              temporary[k][l]=temporary[i][j]
+                              temporary[i][j]=samplecell;
+                        const checkFlag = checkForKingChecked(temporary, colorToCheck)
+                        if(checkFlag==false){
+                            return false;
+                        }
+                    }
+                }
+            }
+           }
+        }
+      }
+      return true;
   }
