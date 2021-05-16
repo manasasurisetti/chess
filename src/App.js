@@ -77,7 +77,7 @@ function App() {
            <span className="icon arrow"></span>
            </span>
            <span className="button-text">Play</span>
-         </button>
+         </button> 
        </div> : ''
        }{
          gameStarted ?
