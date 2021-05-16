@@ -165,11 +165,21 @@ function CreateRow(firstCellColor, rowNum, cellDetails){
       
     return(
       <Fragment>
+     
+      <div className="player">
+       {player1}
+      </div>  
+      <div className="wrapper">
       <div className="timer">  
       {timerState.min}:{timerState.sec}
       </div> 
       <div className="boardContainer"> 
+      
       {item}
+      </div>
+      </div>
+      <div className="player">
+       {player2}
       </div>
       </Fragment>
 

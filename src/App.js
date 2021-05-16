@@ -4,7 +4,7 @@ import Grid from './grid/grid';
 import { useState } from 'react'
 
 const useNameHook = () => {
-  const [name, setName] = useState('');
+  const [name, setName] = useState('parth');
 
   const handleChange = (e) => {
     setName(e.target.value)
@@ -18,7 +18,7 @@ const useNameHook = () => {
 function App() {
   const coins = ['rook', 'knight', 'bishop', 'queen', 'king', 'bishop', 'knight', 'rook']
   const coinPositions = [];
-  const [gameStarted, setGameStarted] = useState(false);
+  const [gameStarted, setGameStarted] = useState(true);
   const name1 = useNameHook();
   const name2 = useNameHook();
   for (let i = 0; i < 8; i++) {
