@@ -60,9 +60,11 @@
     text-align: center;
 }
 .player{
-    
+    background: linear-gradient(#67eaae , #b0acf3) ;
     border: 1px solid green;
     margin: 0 2vw;
+    text-transform: uppercase;
+    height: 40vh;
 }
 .coinsDead{
     display: flex;
@@ -70,6 +72,10 @@
     flex-wrap: nowrap;
 }
 .dead{
+    font-size: xx-large;
+}
+.nameHeader{
+    font-family: "Montserrat", sans-serif;
     font-size: xx-large;
 }
 @keyframes spin { 
@@ -89,12 +95,24 @@
         font-size: xx-large;
         display: inline;
     }
+    .player{
+        background: linear-gradient(#67eaae , #b0acf3) ;
+        border: 1px solid green;
+        margin: 2vh 0;
+        text-transform: uppercase;
+        height: inherit;
+       
+    }
+    .nameHeader{
+        font-family: "Montserrat", sans-serif;
+        font-size: large;
+    }
     .coinsDead{
         display: flex;
         flex-direction: row;
         flex-wrap: nowrap;
     }
     .dead{
-        font-size: large;
+        font-size: xx-large;
     }
 }
