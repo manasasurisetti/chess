@@ -1,6 +1,6 @@
 import './grid.css'
 import React, {  Fragment, useEffect, useState } from 'react';
-import { findPossibleMoves, makeAMove ,checkForKingChecked } from './useUpdateGrid';
+import { findPossibleMoves, makeAMove ,checkForKingChecked,checkForKingCheckmate } from './useUpdateGrid';
 const _ = require('lodash')
 const pieces = {
     black: {
@@ -36,6 +36,7 @@ function Grid({ coinPositions, player1, player2 }){
     let item = []
     const [chance, setChance] = useState('white')
     const [checkFlag, setCheckFlag] = useState('false')
+    const [checkmateFlag, setCheckmateFlag] = useState('false')
     
     const [classArray, setClassArray] = useState(defaultClassArray);
 
@@ -44,6 +45,12 @@ function Grid({ coinPositions, player1, player2 }){
     const [cellDetails, setCellDetails] = useState(coinPositions);
     useEffect(()=> {
         if(checkFlag==true){
+            if(checkmateFlag==true){
+                alert('haha ! you have no more moves, i won')
+                setCellDetailsHandler(coinPositions)
+                setCheckmateFlag(false)
+            }
+            else
             alert('haha macha! your king is under threat');
             setCheckFlag(false)
           }
@@ -119,12 +126,28 @@ let initialColor = "black"
              temporary[i][j] = Object.assign({}, resultLayout[i][j]);
             }
        }
+       let temporary1 = [];
+        for(let i=0;i<8;i++)
+       {
+          temporary1[i] = [];
+           for(let j=0;j<8;j++){
+             temporary1[i][j] = Object.assign({}, resultLayout[i][j]);
+            }
+       }
        if(movePlayed){
         const checkFlag = checkForKingChecked(temporary, chance==='white'?'black':'white')
+        // const checkmateFlag = checkForKingCheckmate(temporary1,chance)
         if(checkFlag === true)
           {
             setCheckFlag(true)
+            const checkmateFlag1 = checkForKingCheckmate(temporary1,chance)
+            if(checkmateFlag1 === true)
+          {
+            setCheckmateFlag(true)
           }
+          }
+          
+          
          setChanceHandler(chance=='white'?'black':'white');
             }
     }
