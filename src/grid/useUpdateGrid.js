@@ -362,7 +362,7 @@ export function findPossibleMoves(tempcellDetails,r,c, chance){
             break;
           case 'pawn': 
             if (tempcellDetails[r][c].coinColor=== 'white') {
-              if (r=== 6 && tempcellDetails[r - 1][c].coinColor=== '')
+              if (r=== 6 && tempcellDetails[r - 2][c].coinColor=== '')
                 tempcellDetails[r - 2][c].isActive = true
               if (r - 1 >= 0 && tempcellDetails[r - 1][c].coinColor=== '')
                 tempcellDetails[r - 1][c].isActive = true
@@ -372,7 +372,7 @@ export function findPossibleMoves(tempcellDetails,r,c, chance){
                 tempcellDetails[r - 1][c - 1].isActive = true
             }
             else {
-              if (r=== 1 && tempcellDetails[r + 1][c].coinColor=== '')
+              if (r=== 1 && tempcellDetails[r + 2][c].coinColor=== '')
                 tempcellDetails[r + 2][c].isActive = true
               if (r + 1 < 8 && tempcellDetails[r + 1][c].coinColor=== '')
                 tempcellDetails[r + 1][c].isActive = true
