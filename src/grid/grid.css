@@ -60,10 +60,17 @@
     text-align: center;
 }
 .player{
-    width: 10vw;
-    height: 10vw;
+    
     border: 1px solid green;
     margin: 0 2vw;
+}
+.coinsDead{
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+}
+.dead{
+    font-size: xx-large;
 }
 @keyframes spin { 
     100% { 
@@ -81,5 +88,13 @@
     .cell> p{
         font-size: xx-large;
         display: inline;
+    }
+    .coinsDead{
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+    }
+    .dead{
+        font-size: large;
     }
 }

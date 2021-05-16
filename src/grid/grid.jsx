@@ -190,7 +190,14 @@ function CreateRow(firstCellColor, rowNum, cellDetails){
       <Fragment>
      
       <div className="player">
-       {player1}
+       <h2>{player1}</h2>
+       <div className="coinsDead">
+        <div className="dead">{pieces.black['knight']}</div>
+        <div className="dead">{pieces.black['knight']}</div>
+        <div className="dead">{pieces.black['knight']}</div>
+        <div className="dead">{pieces.black['knight']}</div>
+
+      </div>
       </div>  
       <div className="wrapper">
       <div className="timer">  
